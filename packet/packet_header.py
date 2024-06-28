@@ -1,6 +1,9 @@
 import struct
 
 class PacketHeader:
+
+    format = '<HBBBBBQfII2B'
+
     def __init__(self, m_packetFormat, m_gameYear, m_gameMajorVersion, m_gameMinorVersion, 
                  m_packetVersion, m_packetId, m_sessionUID, m_sessionTime, 
                  m_frameIdentifier, m_overallFrameIdentifier, m_playerCarIndex, 
@@ -19,7 +22,7 @@ class PacketHeader:
         self.m_secondaryPlayerCarIndex = m_secondaryPlayerCarIndex
 
     def pack(self):
-        return struct.pack('<HBBBBBQfII2B', 
+        return struct.pack(self.format, 
                            self.m_packetFormat,
                            self.m_gameYear,
                            self.m_gameMajorVersion,
@@ -35,5 +38,5 @@ class PacketHeader:
 
     @classmethod
     def unpack(cls, data):
-        unpacked_data = struct.unpack('<HBBBBBQfII2B', data)
+        unpacked_data = struct.unpack(cls.format, data)
         return cls(*unpacked_data)

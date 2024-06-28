@@ -1,6 +1,9 @@
 import struct
 
 class CarMotionData:
+
+    format = '<3f3f6h3f3f'
+
     def __init__(self, m_worldPositionX, m_worldPositionY, m_worldPositionZ, 
                  m_worldVelocityX, m_worldVelocityY, m_worldVelocityZ,
                  m_worldForwardDirX, m_worldForwardDirY, m_worldForwardDirZ,
@@ -27,7 +30,7 @@ class CarMotionData:
         self.m_roll = m_roll
 
     def pack(self):
-        return struct.pack('<3f3f6h3f3f', 
+        return struct.pack(self.format, 
                            self.m_worldPositionX,
                            self.m_worldPositionY,
                            self.m_worldPositionZ,
@@ -49,5 +52,5 @@ class CarMotionData:
 
     @classmethod
     def unpack(cls, data):
-        unpacked_data = struct.unpack('<3f3f6h3f3f', data)
+        unpacked_data = struct.unpack(cls.format, data)
         return cls(*unpacked_data)

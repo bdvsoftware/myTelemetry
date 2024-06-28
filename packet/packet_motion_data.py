@@ -2,7 +2,6 @@ import struct
 from packet.packet_header import PacketHeader
 from data.motion_data import CarMotionData
 
-
 class PacketMotionData:
     def __init__(self, m_header, m_carMotionData):
         self.m_header = m_header
@@ -15,8 +14,8 @@ class PacketMotionData:
 
     @classmethod
     def unpack(cls, data):
-        header_size = struct.calcsize('<HBBBBBQfII2B')
-        car_motion_data_size = struct.calcsize('<3f3f6h3f3f')
+        header_size = struct.calcsize(PacketHeader.format)
+        car_motion_data_size = struct.calcsize(CarMotionData.format)
         num_cars = 22
         
         m_header = PacketHeader.unpack(data[:header_size])
