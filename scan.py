@@ -5,6 +5,8 @@ from packet.packet_header import PacketHeader
 from packet.packet_motion_data import PacketMotionData
 from packet.packet_lap_data import PacketLapData
 
+from kafka.kafka_producer import KafkaProducer
+
 
 def capturePacketMontion(udp_payload):
     try:
@@ -16,9 +18,12 @@ def capturePacketMontion(udp_payload):
 def capturePacketLapData(udp_payload):
     try:
         lap_data_packet = PacketLapData.unpack(udp_payload)
-        print(lap_data_packet.__dict__)
+        producer = KafkaProducer()
+        producer.produce(lap_data_packet.to_json())
     except struct.error as e:
         print(f"Error unpacking LAP DATA packet: {e}")
+    finally:
+        producer.close()
 
 switch_funct = {
     0: capturePacketMontion,

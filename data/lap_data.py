@@ -1,4 +1,5 @@
 import struct
+import json
 
 class LapData:
     format = '<2I2H2B2H3f9B4H2B'
@@ -74,3 +75,33 @@ class LapData:
     def unpack(cls, data):
         unpacked_data = struct.unpack(cls.format, data)
         return cls(*unpacked_data)
+    
+    def to_json(self):
+        return json.dumps({
+            'm_lastLapTimeInMS': self.m_lastLapTimeInMS,
+            'm_currentLapTimeInMS': self.m_currentLapTimeInMS,
+            'm_sector1TimeInMS': self.m_sector1TimeInMS,
+            'm_sector1TimeMinutes': self.m_sector1TimeMinutes,
+            'm_sector2TimeInMS': self.m_sector2TimeInMS,
+            'm_sector2TimeMinutes': self.m_sector2TimeMinutes,
+            'm_deltaToCarInFrontInMS': self.m_deltaToCarInFrontInMS,
+            'm_deltaToRaceLeaderInMS': self.m_deltaToRaceLeaderInMS,
+            'm_lapDistance': self.m_lapDistance,
+            'm_totalDistance': self.m_totalDistance,
+            'm_safetyCarDelta': self.m_safetyCarDelta,
+            'm_carPosition': self.m_carPosition,
+            'm_currentLapNum': self.m_currentLapNum,
+            'm_pitStatus': self.m_pitStatus,
+            'm_numPitStops': self.m_numPitStops,
+            'm_sector': self.m_sector,
+            'm_currentLapInvalid': self.m_currentLapInvalid,
+            'm_penalties': self.m_penalties,
+            'm_totalWarnings': self.m_totalWarnings,
+            'm_cornerCuttingWarnings': self.m_cornerCuttingWarnings,
+            'm_numUnservedDriveThroughPens': self.m_numUnservedDriveThroughPens,
+            'm_numUnservedStopGoPens': self.m_numUnservedStopGoPens,
+            'm_gridPosition': self.m_gridPosition,
+            'm_driverStatus': self.m_driverStatus,
+            'm_resultStatus': self.m_resultStatus,
+            'm_pitLaneTimerActive': self.m_pitLaneTimerActive
+        })
