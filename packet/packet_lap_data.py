@@ -35,8 +35,8 @@ class PacketLapData:
     
     def to_json(self):
         return json.dumps({
-            'm_header': self.m_header.to_json(),  # Suponiendo que PacketHeader tiene un método to_json()
-            'm_lapData': [lap_data.to_json() for lap_data in self.m_lapData],  # Suponiendo que LapData tiene un método to_json()
+            'm_header': self.m_header.to_json(),
+            'm_lapData': [lap_data.to_json() for lap_data in self.m_lapData],
             'm_timeTrialPBCarIdx': self.m_timeTrialPBCarIdx,
             'm_timeTrialRivalCarIdx': self.m_timeTrialRivalCarIdx
         })

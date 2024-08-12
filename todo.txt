@@ -1,0 +1,2 @@
+changes kafka_producer name to lap_time_producer
+create motion_data producer

@@ -8,7 +8,7 @@ class KafkaProducer:
             'client.id': client_id
         }
         self.producer = Producer(**self.conf)
-        self.topic = 'mytelemetry.udp.message.created'
+        self.topic = 'mytelemetry.udp.message.lap_data.created'
 
     def delivery_report(self, err, msg):
         if err is not None:
