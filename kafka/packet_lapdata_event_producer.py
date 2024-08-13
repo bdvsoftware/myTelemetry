@@ -1,7 +1,7 @@
 import uuid
 from confluent_kafka import Producer
 
-class KafkaProducer:
+class PacketLapDataEventProducer:
     def __init__(self, bootstrap_servers='localhost:19092', client_id='python-producer'):
         self.conf = {
             'bootstrap.servers': bootstrap_servers,
