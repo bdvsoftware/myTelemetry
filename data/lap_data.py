@@ -77,7 +77,7 @@ class LapData:
         return cls(*unpacked_data)
     
     def to_json(self):
-        return json.dumps({
+        return {
             'm_lastLapTimeInMS': self.m_lastLapTimeInMS,
             'm_currentLapTimeInMS': self.m_currentLapTimeInMS,
             'm_sector1TimeInMS': self.m_sector1TimeInMS,
@@ -104,4 +104,4 @@ class LapData:
             'm_driverStatus': self.m_driverStatus,
             'm_resultStatus': self.m_resultStatus,
             'm_pitLaneTimerActive': self.m_pitLaneTimerActive
-        })
+        }
