@@ -1,7 +1,5 @@
 import struct
-import json
 from packet.packet_header import PacketHeader
-from data.motion_ex_data import CarMotionExData
 
 class PacketMotionExData:
 
@@ -77,14 +75,56 @@ class PacketMotionExData:
             self.m_frontWheelsAngle,
             self.m_wheelVertForce
         )
-
         return packed_header+motion_ex_data
     
     @classmethod
     def unpack(cls, data):
         header_size = struct.calcsize(PacketHeader.format)
         header = PacketHeader.unpack(data[:header_size])
-        motion_ex_size = struct.calcsize(format)
+        motion_ex_data = struct.unpack_from('4f'  # m_suspensionPosition[4]
+            '4f'  # m_suspensionVelocity[4]
+            '4f'  # m_suspensionAcceleration[4]
+            '4f'  # m_wheelSpeed[4]
+            '4f'  # m_wheelSlipRatio[4]
+            '4f'  # m_wheelSlipAngle[4]
+            '4f'  # m_wheelLatForce[4]
+            '4f'  # m_wheelLongForce[4]
+            'f'   # m_heightOfCOGAboveGround
+            'f'   # m_localVelocityX
+            'f'   # m_localVelocityY
+            'f'   # m_localVelocityZ
+            'f'   # m_angularVelocityX
+            'f'   # m_angularVelocityY
+            'f'   # m_angularVelocityZ
+            'f'   # m_angularAccelerationX
+            'f'   # m_angularAccelerationY
+            'f'   # m_angularAccelerationZ
+            'f'   # m_frontWheelsAngle
+            '4f'  # m_wheelVertForce[4]
+            , data, header_size)
+        return cls(
+            header,
+            motion_ex_data[:4],    # m_suspensionPosition[4]
+            motion_ex_data[4:8],   # m_suspensionVelocity[4]
+            motion_ex_data[8:12],  # m_suspensionAcceleration[4]
+            motion_ex_data[12:16], # m_wheelSpeed[4]
+            motion_ex_data[16:20], # m_wheelSlipRatio[4]
+            motion_ex_data[20:24], # m_wheelSlipAngle[4]
+            motion_ex_data[24:28], # m_wheelLatForce[4]
+            motion_ex_data[28:32], # m_wheelLongForce[4]
+            motion_ex_data[32],    # m_heightOfCOGAboveGround
+            motion_ex_data[33],    # m_localVelocityX
+            motion_ex_data[34],    # m_localVelocityY
+            motion_ex_data[35],    # m_localVelocityZ
+            motion_ex_data[36],    # m_angularVelocityX
+            motion_ex_data[37],    # m_angularVelocityY
+            motion_ex_data[38],    # m_angularVelocityZ
+            motion_ex_data[39],    # m_angularAccelerationX
+            motion_ex_data[40],    # m_angularAccelerationY
+            motion_ex_data[41],    # m_angularAccelerationZ
+            motion_ex_data[42],    # m_frontWheelsAngle
+            motion_ex_data[43:47]
+        )
 
 
 

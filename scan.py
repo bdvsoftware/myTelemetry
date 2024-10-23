@@ -4,16 +4,24 @@ from scapy.all import sniff, UDP
 from packet.packet_header import PacketHeader
 from packet.packet_motion_data import PacketMotionData
 from packet.packet_lap_data import PacketLapData
+from packet.packet_motion_ex_data import PacketMotionExData
 
 from kafka.packet_lapdata_event_producer import PacketLapDataEventProducer
 
 
-def capturePacketMontion(udp_payload):
+def capturePacketMotion(udp_payload):
     try:
         motion_packet = PacketMotionData.unpack(udp_payload)
         print(motion_packet.__dict__)
     except struct.error as e:
         print(f"Error unpacking MOTION packet: {e}")
+
+def capturePacketMotionEx(udp_payload):
+    try:
+        motion_packet_ex = PacketMotionExData.unpack(udp_payload)
+        print(motion_packet_ex.__dict__)
+    except struct.error as e:
+        print(f"Error unpacking MOTION-EX packet: {e}")
 
 def capturePacketLapData(udp_payload):
     try:
@@ -26,11 +34,12 @@ def capturePacketLapData(udp_payload):
         producer.close()
 
 switch_funct = {
-    0: capturePacketMontion,
-    2: capturePacketLapData
+    0: capturePacketMotion,
+    2: capturePacketLapData,
+    13: capturePacketMotionEx
 }
 
-accepted_packet_ids = [2]
+accepted_packet_ids = [13]
 
 # Función callback para manejar los paquetes capturados
 def packet_callback(packet):
