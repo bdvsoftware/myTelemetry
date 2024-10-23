@@ -1,10 +1,14 @@
 import struct
+import json
+from packet.packet_header import PacketHeader
+from data.motion_ex_data import CarMotionExData
 
-class CarMotionExData:
-    
+class PacketMotionExData:
+
     format = '<4f4f4f4f4f4f4f4f11f4f'
 
     def __init__(self, 
+                 m_header,
                  m_suspensionPosition, 
                  m_suspensionVelocity, 
                  m_suspensionAcceleration,
@@ -25,6 +29,7 @@ class CarMotionExData:
                  m_angularAccelerationZ, 
                  m_frontWheelsAngle,
                  m_wheelVertForce):
+        self.m_header = m_header
         self.m_suspensionPosition = m_suspensionPosition
         self.m_suspensionVelocity = m_suspensionVelocity
         self.m_suspensionAcceleration = m_suspensionAcceleration
@@ -46,8 +51,10 @@ class CarMotionExData:
         self.m_frontWheelsAngle = m_frontWheelsAngle
         self.m_wheelVertForce = m_wheelVertForce
 
-    def pack(self):
-        return struct.pack(
+    def pack (self):
+        packed_header = self.m_header.pack()
+
+        motion_ex_data = struct.pack(
             format,
             self.m_suspensionPosition, 
             self.m_suspensionVelocity, 
@@ -70,8 +77,15 @@ class CarMotionExData:
             self.m_frontWheelsAngle,
             self.m_wheelVertForce
         )
+
+        return packed_header+motion_ex_data
     
     @classmethod
     def unpack(cls, data):
-        unpacked_data = struct.unpack(cls.format, data)
-        return cls(*unpacked_data)
+        header_size = struct.calcsize(PacketHeader.format)
+        header = PacketHeader.unpack(data[:header_size])
+        motion_ex_size = struct.calcsize(format)
+
+
+
+
