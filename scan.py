@@ -7,7 +7,7 @@ from packet.packet_lap_data import PacketLapData
 from packet.packet_motion_ex_data import PacketMotionExData
 from packet.packet_car_telemetry_data import PacketCarTelemetryData
 
-from kafka.packet_lapdata_event_producer import PacketLapDataEventProducer
+from kafka.packet_created_event_producer import PacketCreatedEventProducer
 
 
 def capturePacketMotion(udp_payload):
@@ -27,8 +27,8 @@ def capturePacketMotionEx(udp_payload):
 def capturePacketLapData(udp_payload):
     try:
         lap_data_packet = PacketLapData.unpack(udp_payload)
-        producer = PacketLapDataEventProducer()
-        producer.produce(lap_data_packet.to_json())
+        producer = PacketCreatedEventProducer()
+        producer.produce(lap_data_packet)
     except struct.error as e:
         print(f"Error unpacking LAP DATA packet: {e}")
     finally:

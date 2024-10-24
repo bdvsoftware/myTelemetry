@@ -1,14 +1,15 @@
 import uuid
 from confluent_kafka import Producer
+from message.packet_send import PacketSend
 
-class PacketLapDataEventProducer:
+class PacketCreatedEventProducer:
     def __init__(self, bootstrap_servers='localhost:19092', client_id='python-producer'):
         self.conf = {
             'bootstrap.servers': bootstrap_servers,
             'client.id': client_id
         }
         self.producer = Producer(**self.conf)
-        self.topic = 'mytelemetry.udp.message.lap_data.created'
+        self.topic = 'mytelemetry.udp.packet.created'
 
     def delivery_report(self, err, msg):
         if err is not None:
@@ -16,8 +17,10 @@ class PacketLapDataEventProducer:
         else:
             print(f'Mensaje enviado a {msg.topic()} [{msg.partition()}]')
 
-    def produce(self, message):
-        self.producer.produce(self.topic, key=str(uuid.uuid1()), value=message, callback=self.delivery_report)
+    def produce(self, detected_packet):
+        packet = PacketSend(detected_packet)
+
+        self.producer.produce(self.topic, key=str(uuid.uuid1()), value=packet, callback=self.delivery_report)
         self.producer.poll(0)
 
     def flush(self):
