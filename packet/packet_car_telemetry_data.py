@@ -27,10 +27,19 @@ class PacketCarTelemetryData:
         header_size = struct.calcsize(PacketHeader.format)
         car_telemetry_data_size = struct.calcsize(CarTelemetryData.format)
         m_header = PacketHeader.unpack(data[:header_size])
-        m_car_telemetry_data = [
+        m_carTelemetryData = [
             CarTelemetryData.unpack(data[header_size + i * car_telemetry_data_size: header_size + (i + 1) * car_telemetry_data_size])
             for i in range(num_cars)
         ]
         m_mfdPanelIndex, m_mfdPanelIndexSecondaryPlayer, m_suggestedGear = struct.unpack_from(self.additional_fields_format , data, header_size + num_cars * car_telemetry_data_size)
-        return cls(m_header, m_car_telemetry_data, m_mfdPanelIndex, m_mfdPanelIndexSecondaryPlayer, m_suggestedGear)
+        return cls(m_header, m_carTelemetryData, m_mfdPanelIndex, m_mfdPanelIndexSecondaryPlayer, m_suggestedGear)
+    
+    def to_json(self):
+        json.dumps({
+            'm_header': self.m_header.to_json(),
+            'm_carTelemetryData': [car_telem.to_json() for car_telem in self.m_carTelemetryData],
+            'm_mfdPanelIndex': self.m_mfdPanelIndex,
+            'm_mfdPanelIndexSecondaryPlayer': self.m_mfdPanelIndexSecondaryPlayer,
+            'm_suggestedGear': self.m_suggestedGear
+        })
     
