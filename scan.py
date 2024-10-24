@@ -5,6 +5,7 @@ from packet.packet_header import PacketHeader
 from packet.packet_motion_data import PacketMotionData
 from packet.packet_lap_data import PacketLapData
 from packet.packet_motion_ex_data import PacketMotionExData
+from packet.packet_car_telemetry_data import PacketCarTelemetryData
 
 from kafka.packet_lapdata_event_producer import PacketLapDataEventProducer
 
@@ -33,13 +34,21 @@ def capturePacketLapData(udp_payload):
     finally:
         producer.close()
 
+def capturePacketCarTelemetryData(udp_payload):
+    try:
+        packet_car_telemetry_data = PacketCarTelemetryData.unpack(udp_payload)
+        print(packet_car_telemetry_data.__dict__)
+    except struct.error as e:
+        print(f"Error unpacking CAR TELEMETRY packet: {e}")
+
 switch_funct = {
     0: capturePacketMotion,
     2: capturePacketLapData,
+    6: capturePacketCarTelemetryData,
     13: capturePacketMotionEx
 }
 
-accepted_packet_ids = [13]
+accepted_packet_ids = [6]
 
 # Función callback para manejar los paquetes capturados
 def packet_callback(packet):
