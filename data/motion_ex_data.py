@@ -75,3 +75,27 @@ class CarMotionExData:
     def unpack(cls, data):
         unpacked_data = struct.unpack(cls.format, data)
         return cls(*unpacked_data)
+    
+    def to_json(self):
+        return {
+            'm_suspensionPosition': self.m_suspensionPosition,
+            'm_suspensionVelocity': self.m_suspensionVelocity,
+            'm_suspensionAcceleration': self.m_suspensionAcceleration,
+            'm_wheelSpeed': self.m_wheelSpeed,
+            'm_wheelSlipRatio': self.m_wheelSlipRatio,
+            'm_wheelSlipAngle': self.m_wheelSlipAngle,
+            'm_wheelLatForce': self.m_wheelLatForce,
+            'm_wheelLongForce': self.m_wheelLongForce,
+            'm_heightOfCOGAboveGround': self.m_heightOfCOGAboveGround,
+            'm_localVelocityX': self.m_localVelocityX,
+            'm_localVelocityY': self.m_localVelocityY,
+            'm_localVelocityZ': self.m_localVelocityZ,
+            'm_angularVelocityX': self.m_angularVelocityX,
+            'm_angularVelocityY': self.m_angularVelocityY,
+            'm_angularVelocityZ': self.m_angularVelocityZ,
+            'm_angularAccelerationX': self.m_angularAccelerationX,
+            'm_angularAccelerationY': self.m_angularAccelerationY,
+            'm_angularAccelerationZ': self.m_angularAccelerationZ,
+            'm_frontWheelsAngle': self.m_frontWheelsAngle,
+            'm_wheelVertForce': self.m_wheelVertForce
+        }

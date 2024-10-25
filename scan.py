@@ -48,7 +48,7 @@ switch_funct = {
     13: capturePacketMotionEx
 }
 
-accepted_packet_ids = [6]
+accepted_packet_ids = [13]
 
 # Función callback para manejar los paquetes capturados
 def packet_callback(packet):

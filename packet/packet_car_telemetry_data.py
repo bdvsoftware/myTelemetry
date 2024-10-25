@@ -6,7 +6,7 @@ from data.car_telemetry_data import CarTelemetryData
 class PacketCarTelemetryData:
     additional_fields_format = "2Bb"
 
-    format = "<" + PacketHeader.format + (CarTelemetryData * 22) + additional_fields_format
+    format = "<" + PacketHeader.format + (CarTelemetryData.format * 22) + additional_fields_format
 
     def __init__(self, m_header, m_carTelemetryData, m_mfdPanelIndex, m_mfdPanelIndexSecondaryPlayer, m_suggestedGear):
         self.m_header = m_header

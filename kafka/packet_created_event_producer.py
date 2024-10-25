@@ -1,6 +1,6 @@
 import uuid
 from confluent_kafka import Producer
-from message.packet_send import PacketSend
+from kafka.message.packet_send import PacketSend
 
 class PacketCreatedEventProducer:
     def __init__(self, bootstrap_servers='localhost:19092', client_id='python-producer'):

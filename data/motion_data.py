@@ -54,3 +54,25 @@ class CarMotionData:
     def unpack(cls, data):
         unpacked_data = struct.unpack(cls.format, data)
         return cls(*unpacked_data)
+    
+    def to_json(self):
+        return {
+            'm_worldPositionX': self.m_worldPositionX,
+            'm_worldPositionY': self.m_worldPositionY,
+            'm_worldPositionZ': self.m_worldPositionZ,
+            'm_worldVelocityX': self.m_worldVelocityX,
+            'm_worldVelocityY': self.m_worldVelocityY,
+            'm_worldVelocityZ': self.m_worldVelocityZ,
+            'm_worldForwardDirX': self.m_worldForwardDirX,
+            'm_worldForwardDirY': self.m_worldForwardDirY,
+            'm_worldForwardDirZ': self.m_worldForwardDirZ,
+            'm_worldRightDirX': self.m_worldRightDirX,
+            'm_worldRightDirY': self.m_worldRightDirY,
+            'm_worldRightDirZ': self.m_worldRightDirZ,
+            'm_gForceLateral': self.m_gForceLateral,
+            'm_gForceLongitudinal': self.m_gForceLongitudinal,
+            'm_gForceVertical': self.m_gForceVertical,
+            'm_yaw': self.m_yaw,
+            'm_pitch': self.m_pitch,
+            'm_roll': self.m_roll
+        }
