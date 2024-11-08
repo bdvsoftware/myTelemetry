@@ -20,9 +20,12 @@ def capturePacketMotion(udp_payload):
 def capturePacketMotionEx(udp_payload):
     try:
         motion_packet_ex = PacketMotionExData.unpack(udp_payload)
-        print(motion_packet_ex.__dict__)
+        producer = PacketCreatedEventProducer()
+        producer.produce(motion_packet_ex)
     except struct.error as e:
         print(f"Error unpacking MOTION-EX packet: {e}")
+    finally:
+        producer.close()
 
 def capturePacketLapData(udp_payload):
     try:

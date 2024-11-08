@@ -13,14 +13,13 @@ class PacketCreatedEventProducer:
 
     def delivery_report(self, err, msg):
         if err is not None:
-            print(f'Error al enviar el mensaje: {err}')
+            print(f'Error when sending message: {err}')
         else:
-            print(f'Mensaje enviado a {msg.topic()} [{msg.partition()}]')
+            print(f'Message sended to {msg.topic()} [{msg.partition()}]')
 
     def produce(self, detected_packet):
         packet = PacketSend(detected_packet)
-
-        self.producer.produce(self.topic, key=str(uuid.uuid1()), value=packet, callback=self.delivery_report)
+        self.producer.produce(self.topic, key=str(uuid.uuid1()), value=packet.to_json(), callback=self.delivery_report)
         self.producer.poll(0)
 
     def flush(self):
