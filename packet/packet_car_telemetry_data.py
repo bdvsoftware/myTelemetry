@@ -35,11 +35,11 @@ class PacketCarTelemetryData:
         return cls(m_header, m_carTelemetryData, m_mfdPanelIndex, m_mfdPanelIndexSecondaryPlayer, m_suggestedGear)
     
     def to_json(self):
-        json.dumps({
+        return {
             'm_header': self.m_header.to_json(),
             'm_carTelemetryData': [car_telem.to_json() for car_telem in self.m_carTelemetryData],
             'm_mfdPanelIndex': self.m_mfdPanelIndex,
             'm_mfdPanelIndexSecondaryPlayer': self.m_mfdPanelIndexSecondaryPlayer,
             'm_suggestedGear': self.m_suggestedGear
-        })
+        }
     

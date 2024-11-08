@@ -13,14 +13,17 @@ from kafka.packet_created_event_producer import PacketCreatedEventProducer
 def capturePacketMotion(udp_payload):
     try:
         motion_packet = PacketMotionData.unpack(udp_payload)
-        print(motion_packet.__dict__)
+        producer = PacketCreatedEventProducer()
+        producer.produce(motion_packet)
     except struct.error as e:
         print(f"Error unpacking MOTION packet: {e}")
+    finally:
+        producer.close()
 
 def capturePacketMotionEx(udp_payload):
     try:
-        motion_packet_ex = PacketMotionExData.unpack(udp_payload)
         producer = PacketCreatedEventProducer()
+        motion_packet_ex = PacketMotionExData.unpack(udp_payload)
         producer.produce(motion_packet_ex)
     except struct.error as e:
         print(f"Error unpacking MOTION-EX packet: {e}")
@@ -29,8 +32,8 @@ def capturePacketMotionEx(udp_payload):
 
 def capturePacketLapData(udp_payload):
     try:
-        lap_data_packet = PacketLapData.unpack(udp_payload)
         producer = PacketCreatedEventProducer()
+        lap_data_packet = PacketLapData.unpack(udp_payload)
         producer.produce(lap_data_packet)
     except struct.error as e:
         print(f"Error unpacking LAP DATA packet: {e}")
@@ -39,10 +42,13 @@ def capturePacketLapData(udp_payload):
 
 def capturePacketCarTelemetryData(udp_payload):
     try:
-        packet_car_telemetry_data = PacketCarTelemetryData.unpack(udp_payload)
-        print(packet_car_telemetry_data.__dict__)
+        producer = PacketCreatedEventProducer()
+        packet_car_telemetry_data = PacketCarTelemetryData.unpack(PacketCarTelemetryData, udp_payload)
+        producer.produce(packet_car_telemetry_data)
     except struct.error as e:
         print(f"Error unpacking CAR TELEMETRY packet: {e}")
+    finally:
+        producer.close()
 
 switch_funct = {
     0: capturePacketMotion,
@@ -51,9 +57,9 @@ switch_funct = {
     13: capturePacketMotionEx
 }
 
-accepted_packet_ids = [13]
+accepted_packet_ids = [0, 2, 6, 13]
 
-# Función callback para manejar los paquetes capturados
+# Packet managing
 def packet_callback(packet):
     if UDP in packet and packet[UDP].dport == 20777:
         udp_payload = bytes(packet[UDP].payload)
@@ -67,5 +73,5 @@ def analyzePacketType(packet_header_id: int, udp_payload):
     if(packet_header_id in accepted_packet_ids):
         switch_funct.get(packet_header_id)(udp_payload)
 
-# Sniff en localhost y llama a packet_callback para cada paquete capturado
+# Sniffing
 sniff(filter="udp port 20777", prn=packet_callback, store=0, iface="Ethernet")

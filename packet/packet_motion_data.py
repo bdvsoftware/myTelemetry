@@ -27,7 +27,7 @@ class PacketMotionData:
         return cls(m_header, m_carMotionData)
 
     def to_json(self):
-        json.dumps({
+        return {
             'm_header': self.m_header.to_json(),
             'm_carMotionData': [car_motion.to_json() for car_motion in self.m_carMotionData]
-        })
+        }

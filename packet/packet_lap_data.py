@@ -34,9 +34,9 @@ class PacketLapData:
         return cls(m_header, m_lapData, m_timeTrialPBCarIdx, m_timeTrialRivalCarIdx)
     
     def to_json(self):
-        return json.dumps({
+        return {
             'm_header': self.m_header.to_json(),
             'm_lapData': [lap_data.to_json() for lap_data in self.m_lapData],
             'm_timeTrialPBCarIdx': self.m_timeTrialPBCarIdx,
             'm_timeTrialRivalCarIdx': self.m_timeTrialRivalCarIdx
-        })
+        }
