@@ -1,5 +1,6 @@
 import struct
 import json
+import math
 
 class LapData:
     format = '<2I2H2B2H3f9B4H2B'
@@ -11,7 +12,7 @@ class LapData:
                  m_pitStatus, m_numPitStops, m_sector, m_currentLapInvalid, m_penalties,
                  m_totalWarnings, m_cornerCuttingWarnings, m_numUnservedDriveThroughPens,
                  m_numUnservedStopGoPens, m_gridPosition, m_driverStatus, m_resultStatus,
-                 m_pitLaneTimerActive, **kwargs):  # Handle extra arguments with kwargs
+                 m_pitLaneTimerActive):  
         self.m_lastLapTimeInMS = m_lastLapTimeInMS
         self.m_currentLapTimeInMS = m_currentLapTimeInMS
         self.m_sector1TimeInMS = m_sector1TimeInMS
@@ -67,9 +68,9 @@ class LapData:
                            self.m_driverStatus,
                            self.m_resultStatus,
                            self.m_pitLaneTimerActive,
-                           *(self.m_pitLaneTimeInLaneInMS if hasattr(self, 'm_pitLaneTimeInLaneInMS') else (0,)),  # Pack 0 if attribute doesn't exist
-                           *(self.m_pitStopTimerInMS if hasattr(self, 'm_pitStopTimerInMS') else (0,)),
-                           *(self.m_pitStopShouldServePen if hasattr(self, 'm_pitStopShouldServePen') else (0,)))
+                           None,
+                           None,
+                           None)
 
     @classmethod
     def unpack(cls, data):
@@ -86,8 +87,8 @@ class LapData:
             'm_sector2TimeMinutes': self.m_sector2TimeMinutes,
             'm_deltaToCarInFrontInMS': self.m_deltaToCarInFrontInMS,
             'm_deltaToRaceLeaderInMS': self.m_deltaToRaceLeaderInMS,
-            'm_lapDistance': self.m_lapDistance,
-            'm_totalDistance': self.m_totalDistance,
+            'm_lapDistance': None if isinstance(self.m_lapDistance, float) and math.isnan(self.m_lapDistance) else self.m_lapDistance,
+            'm_totalDistance': None if isinstance(self.m_totalDistance, float) and math.isnan(self.m_totalDistance) else self.m_totalDistance,
             'm_safetyCarDelta': self.m_safetyCarDelta,
             'm_carPosition': self.m_carPosition,
             'm_currentLapNum': self.m_currentLapNum,
