@@ -89,7 +89,7 @@ class LapData:
             'm_deltaToRaceLeaderInMS': self.m_deltaToRaceLeaderInMS,
             'm_lapDistance': None if isinstance(self.m_lapDistance, float) and math.isnan(self.m_lapDistance) else self.m_lapDistance,
             'm_totalDistance': None if isinstance(self.m_totalDistance, float) and math.isnan(self.m_totalDistance) else self.m_totalDistance,
-            'm_safetyCarDelta': self.m_safetyCarDelta,
+            'm_safetyCarDelta': None if isinstance(self.m_safetyCarDelta, float) and math.isnan(self.m_safetyCarDelta) else self.m_safetyCarDelta,
             'm_carPosition': self.m_carPosition,
             'm_currentLapNum': self.m_currentLapNum,
             'm_pitStatus': self.m_pitStatus,

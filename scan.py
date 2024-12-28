@@ -14,7 +14,7 @@ def capturePacketMotion(udp_payload):
     try:
         motion_packet = PacketMotionData.unpack(udp_payload)
         producer = PacketCreatedEventProducer()
-        producer.produce(motion_packet)
+        producer.produce(motion_packet, stint_name)
     except struct.error as e:
         print(f"Error unpacking MOTION packet: {e}")
     finally:
@@ -24,7 +24,7 @@ def capturePacketMotionEx(udp_payload):
     try:
         producer = PacketCreatedEventProducer()
         motion_packet_ex = PacketMotionExData.unpack(udp_payload)
-        producer.produce(motion_packet_ex)
+        producer.produce(motion_packet_ex, stint_name)
     except struct.error as e:
         print(f"Error unpacking MOTION-EX packet: {e}")
     finally:
@@ -34,7 +34,7 @@ def capturePacketLapData(udp_payload):
     try:
         producer = PacketCreatedEventProducer()
         lap_data_packet = PacketLapData.unpack(udp_payload)
-        producer.produce(lap_data_packet)
+        producer.produce(lap_data_packet, stint_name)
     except struct.error as e:
         print(f"Error unpacking LAP DATA packet: {e}")
     finally:
@@ -44,7 +44,7 @@ def capturePacketCarTelemetryData(udp_payload):
     try:
         producer = PacketCreatedEventProducer()
         packet_car_telemetry_data = PacketCarTelemetryData.unpack(PacketCarTelemetryData, udp_payload)
-        producer.produce(packet_car_telemetry_data)
+        producer.produce(packet_car_telemetry_data, stint_name)
     except struct.error as e:
         print(f"Error unpacking CAR TELEMETRY packet: {e}")
     finally:
@@ -73,5 +73,9 @@ def analyzePacketType(packet_header_id: int, udp_payload):
     if(packet_header_id in accepted_packet_ids):
         switch_funct.get(packet_header_id)(udp_payload)
 
+# Request stint name from the user
+global stint_name
+stint_name = input("Please enter the stint name: ")
+print(f"Stint name set to: {stint_name}")
 # Sniffing
 sniff(filter="udp port 20777", prn=packet_callback, store=0, iface="Ethernet")
