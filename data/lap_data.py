@@ -3,7 +3,7 @@ import json
 import math
 
 class LapData:
-    format = '<2I2H2B2H3f9B4H2B'
+    format = '<2IHBHB2H3f15B'
 
     def __init__(self, m_lastLapTimeInMS, m_currentLapTimeInMS, m_sector1TimeInMS,
                  m_sector1TimeMinutes, m_sector2TimeInMS, m_sector2TimeMinutes,

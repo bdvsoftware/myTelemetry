@@ -57,7 +57,7 @@ switch_funct = {
     13: capturePacketMotionEx
 }
 
-accepted_packet_ids = [0, 2, 6, 13]
+accepted_packet_ids = [2]
 
 # Packet managing
 def packet_callback(packet):
