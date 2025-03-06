@@ -6,6 +6,7 @@ class CarSetupData:
     def __init__(self,
                  m_frontWing,
                  m_rearWing,
+                 m_onThrottle,
                  m_offThrottle,
                  m_frontCamber,
                  m_rearCamber,
@@ -27,6 +28,7 @@ class CarSetupData:
                  m_fuelLoad):
         self.m_frontWing = m_frontWing
         self.m_rearWing = m_rearWing
+        self.m_onThrottle = m_onThrottle
         self.m_offThrottle = m_offThrottle
         self.m_frontCamber = m_frontCamber
         self.m_rearCamber = m_rearCamber
@@ -52,6 +54,7 @@ class CarSetupData:
             self.format,
             self.m_frontWing,
             self.m_rearWing,
+            self.m_onThrottle,
             self.m_offThrottle,
             self.m_frontCamber,
             self.m_rearCamber,

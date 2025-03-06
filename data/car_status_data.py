@@ -2,7 +2,7 @@ import struct
 
 class CarStatusData:
 
-    format = '<5B3f2H2B4Hb3fB3fB'
+    format = '<5B3f2H2BH3Bb3fB3fB'
 
     def __init__(self,
                  m_tractionControl,

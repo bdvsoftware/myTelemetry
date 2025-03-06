@@ -4,7 +4,9 @@ class PacketSend:
 
     types = {0: "motionPacketData",
             2: "lapDataPacketData",
+            5: "carSetupPacketData",
             6: "carTelemetryPacketData",
+            7: "carStatusPacketData",
             13: "motionExPacketData"}
 
     def __init__(self, packet, stint_name):

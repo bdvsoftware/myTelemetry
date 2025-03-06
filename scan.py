@@ -55,7 +55,7 @@ def capturePacketCarTelemetryData(udp_payload):
 def capturePacketCarSetupData(udp_payload):
     try:
         producer = PacketCreatedEventProducer()
-        packet_car_setup_data = PacketCarSetupData.unpack(PacketCarSetupData, udp_payload)
+        packet_car_setup_data = PacketCarSetupData.unpack(udp_payload)
         producer.produce(packet_car_setup_data, stint_name)
     except struct.error as e:
         print(f"Error unpacking CAR SETUP packet: {e}")
@@ -65,7 +65,7 @@ def capturePacketCarSetupData(udp_payload):
 def capturePacketCarStatusData(udp_payload):
     try:
         producer = PacketCreatedEventProducer()
-        packet_car_status_data = PacketCarStatusData.unpack(PacketCarStatusData, udp_payload)
+        packet_car_status_data = PacketCarStatusData.unpack(udp_payload)
         producer.produce(packet_car_status_data, stint_name)
     except struct.error as e:
         print(f"Error unpacking CAR STATUS packet: {e}")
@@ -77,10 +77,11 @@ switch_funct = {
     2: capturePacketLapData,
     5: capturePacketCarSetupData,
     6: capturePacketCarTelemetryData,
+    7: capturePacketCarStatusData,
     13: capturePacketMotionEx
 }
 
-accepted_packet_ids = [0, 2, 5, 6, 13]
+accepted_packet_ids = [0, 2, 5, 6, 7, 13]
 
 # Packet managing
 def packet_callback(packet):
