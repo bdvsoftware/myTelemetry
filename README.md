@@ -4,7 +4,7 @@
 F1 23 UDP telemetry messages sniffer and processor.
 
 ## Prerequisites
-- **Set up KAFKA at port 19092**
+- **Set up KAFKA**
 - **KAFKA = zookeeper, schema, broker and kafka-ui (this one is optional)**
 
 Here is a `docker-compose.yml` file which can be used to set up kafka:
