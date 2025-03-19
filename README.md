@@ -101,8 +101,8 @@ python scan.py
 ### Run the F1 23 videogame by EA Sports
 
 ## Work Flow
-- 1. The app will request a stint name.
-- 2. All kafka messages would contain this stint name and would be sended to the topic: 
+1. The app will prompt the user to enter a stint name.
+2. All Kafka messages will include this stint name and be sent to the topic:  
    ```sh
    mytelemetry.udp.packet.created
    ```
