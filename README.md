@@ -98,6 +98,8 @@ docker start kafkaui-1
 python scan.py
 ```
 
+### Run the F1 23 videogame by EA Sports
+
 ## Work Flow
 - 1. The app will request a stint name.
 - 2. All kafka messages would contain this stint name and would be sended to the topic: 
