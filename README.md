@@ -62,15 +62,6 @@ services:
       - kafka
 ```
 
-## Requirements
-- confluent-kafka==2.8.0
-- scapy==2.6.1
-
-In order to install this requirements, please execute: 
-```
-pip install --no-cache-dir -r requirements.txt
-```
-
 ## Installation
 Follow these steps to set up the project on your local machine:
 
@@ -82,6 +73,15 @@ Follow these steps to set up the project on your local machine:
    ```sh
    cd myTelemetry
    ```
+
+## Requirements
+- confluent-kafka==2.8.0
+- scapy==2.6.1
+
+In order to install this requirements, please execute: 
+```
+pip install --no-cache-dir -r requirements.txt
+```
 
 ## Usage
 To run the project, use the following commands:
